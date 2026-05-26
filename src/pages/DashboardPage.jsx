@@ -169,7 +169,7 @@ const DashboardPage = ({ onAddWord }) => {
           <WordList
             words={filteredWords}
             isLoading={false}
-            onView={(word) => navigate(`/word/${word.id}`)}
+            onView={(word) => navigate(`/Lexora-Client/word/${word.id}`)}
             onEdit={(word) => setEditingWord(word)}
             onDelete={handleDelete}
             emptyMessage={
