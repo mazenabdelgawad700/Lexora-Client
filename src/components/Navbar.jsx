@@ -15,7 +15,7 @@ export const Navbar = ({ onAddClick }) => {
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link
-          to="/"
+          to="/Lexora-Client"
           className="flex items-center gap-2.5 group"
         >
           <div className="p-1.5 rounded-lg gradient-bg shadow-sm group-hover:shadow-glow transition-shadow duration-300">
@@ -29,9 +29,9 @@ export const Navbar = ({ onAddClick }) => {
         {/* Navigation links */}
         <div className="hidden sm:flex items-center gap-1">
           <Link
-            to="/"
+            to="/Lexora-Client"
             className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-              location.pathname === "/"
+              location.pathname === "/Lexora-Client"
                 ? "bg-accent-50 dark:bg-accent-900/20 text-accent-600 dark:text-accent-400"
                 : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
@@ -39,9 +39,9 @@ export const Navbar = ({ onAddClick }) => {
             Dashboard
           </Link>
           <Link
-            to="/search"
+            to="/Lexora-Client/search"
             className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
-              location.pathname === "/search"
+              location.pathname === "/Lexora-Client/search"
                 ? "bg-accent-50 dark:bg-accent-900/20 text-accent-600 dark:text-accent-400"
                 : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
