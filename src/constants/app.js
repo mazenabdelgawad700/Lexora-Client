@@ -1,5 +1,5 @@
 // API Configuration
-export const API_BASE_URL = "http://lexora.runasp.net/api/v1/vocabulary";
+export const API_BASE_URL = "https://lexora.runasp.net/api/v1/vocabulary";
 export const API_TIMEOUT = 10000;
 
 // Pagination
