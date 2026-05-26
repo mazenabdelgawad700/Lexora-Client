@@ -33,11 +33,11 @@ const WordDetailsPage = () => {
           setWord(response.data);
         } else {
           toast.error(response.message || "Failed to load word");
-          navigate("/");
+          navigate("/Lexora-Client");
         }
       } catch (error) {
         toast.error(error.message || ERROR_MESSAGES.NETWORK_ERROR);
-        navigate("/");
+        navigate("/Lexora-Client");
       } finally {
         setIsLoading(false);
       }
@@ -53,7 +53,7 @@ const WordDetailsPage = () => {
       if (response.succeeded) {
         store.deleteVocabulary(id);
         toast.success(SUCCESS_MESSAGES.WORD_DELETED);
-        navigate("/");
+        navigate("/Lexora-Client");
       } else {
         toast.error(response.message || ERROR_MESSAGES.SERVER_ERROR);
       }
