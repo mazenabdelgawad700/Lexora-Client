@@ -30,7 +30,7 @@ function AnimatedRoutes({ onAddWord }) {
           }
         />
         <Route
-          path="/search"
+          path="/Lexora-Client/search"
           element={
             <motion.div {...pageVariants} key="search">
               <SearchPage />
@@ -38,7 +38,7 @@ function AnimatedRoutes({ onAddWord }) {
           }
         />
         <Route
-          path="/word/:id"
+          path="/Lexora-Client/word/:id"
           element={
             <motion.div {...pageVariants} key="word-details">
               <WordDetailsPage />
