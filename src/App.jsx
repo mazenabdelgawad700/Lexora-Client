@@ -22,7 +22,7 @@ function AnimatedRoutes({ onAddWord }) {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route
-          path="/"
+          path="/Lexora-Client"
           element={
             <motion.div {...pageVariants} key="dashboard">
               <DashboardPage onAddWord={onAddWord} />
