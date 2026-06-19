@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { Card } from "./common";
 import { BookOpen, TrendingUp, Sparkles } from "lucide-react";
@@ -7,7 +6,13 @@ import clsx from "clsx";
 /**
  * Statistics card component with gradient icon
  */
-export const StatsCard = ({ icon: Icon, label, value, trend, gradient, delay = 0 }) => {
+export const StatsCard = ({
+  icon: Icon,
+  label,
+  value,
+  gradient,
+  delay = 0,
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
@@ -25,10 +30,12 @@ export const StatsCard = ({ icon: Icon, label, value, trend, gradient, delay = 0
             </p>
           </div>
           {Icon && (
-            <div className={clsx(
-              "p-3 rounded-xl shadow-sm",
-              gradient || "bg-gradient-to-br from-accent-500 to-purple-600"
-            )}>
+            <div
+              className={clsx(
+                "p-3 rounded-xl shadow-sm",
+                gradient || "bg-gradient-to-br from-accent-500 to-purple-600",
+              )}
+            >
               <Icon size={22} className="text-white" />
             </div>
           )}
