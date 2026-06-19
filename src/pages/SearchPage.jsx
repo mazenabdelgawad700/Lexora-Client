@@ -26,6 +26,7 @@ const SearchPage = () => {
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [editingWord, setEditingWord] = useState(null);
+  const [hasSearched, setHasSearched] = useState(false);
   const store = useVocabularyStore();
 
   // Load recent searches from localStorage
@@ -39,9 +40,11 @@ const SearchPage = () => {
   const handleSearch = async (searchQuery) => {
     if (!searchQuery.trim()) {
       setResults([]);
+      setHasSearched(false);
       return;
     }
 
+    setHasSearched(true);
     setIsLoading(true);
     try {
       let response;
@@ -78,6 +81,7 @@ const SearchPage = () => {
 
   const handleSearchModeChange = (mode) => {
     setSearchMode(mode);
+    setHasSearched(false);
     setQuery("");
     setResults([]);
   };
@@ -128,7 +132,6 @@ const SearchPage = () => {
           Find words by searching across different categories
         </p>
       </motion.div>
-
       {/* Search mode tabs */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -141,7 +144,6 @@ const SearchPage = () => {
           onChange={handleSearchModeChange}
         />
       </motion.div>
-
       {/* Search bar */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -157,7 +159,6 @@ const SearchPage = () => {
           placeholder={`Search by ${searchMode}...`}
         />
       </motion.div>
-
       {/* Recent searches */}
       {!query && results.length === 0 && recentSearches.length > 0 && (
         <motion.div
@@ -186,10 +187,8 @@ const SearchPage = () => {
           </div>
         </motion.div>
       )}
-
       {/* Results */}
       {isLoading && <ListSkeleton count={3} />}
-
       {!isLoading && query && results.length > 0 && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -209,18 +208,16 @@ const SearchPage = () => {
           />
         </motion.div>
       )}
-
+      hasSearched &&
       {!isLoading && query && results.length === 0 && (
         <EmptyState
           message="No words found matching your search"
           icon={Search}
         />
       )}
-
       {!query && results.length === 0 && recentSearches.length === 0 && (
         <EmptyState message="Start searching to find words" icon={BookOpen} />
       )}
-
       {/* Edit word modal */}
       <AddWordModal
         isOpen={!!editingWord}
@@ -228,7 +225,6 @@ const SearchPage = () => {
         editingWord={editingWord}
         onSuccess={() => setEditingWord(null)}
       />
-
       {/* Delete confirmation */}
       <ConfirmationDialog
         isOpen={!!deleteConfirm}

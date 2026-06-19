@@ -123,17 +123,7 @@ export function groupWordsByDate(words) {
  * Calculate statistics
  */
 export function calculateStats(words) {
-  const now = new Date();
-  const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-
-  const totalWords = words.length;
-  const wordsThisWeek = words.filter(
-    (word) => new Date(word.createdAt) > weekAgo,
-  ).length;
-
   return {
-    total: totalWords,
-    thisWeek: wordsThisWeek,
     latest: words[0] || null,
   };
 }

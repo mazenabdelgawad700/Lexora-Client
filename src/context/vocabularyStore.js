@@ -3,7 +3,7 @@ import { create } from "zustand";
 /**
  * Zustand store for vocabulary state management
  */
-export const useVocabularyStore = create((set, get) => ({
+export const useVocabularyStore = create((set) => ({
   // State
   vocabularies: [],
   currentVocabulary: null,

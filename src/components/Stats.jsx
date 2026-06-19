@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Card } from "./common";
-import { BookOpen, TrendingUp, Sparkles } from "lucide-react";
+import { BookOpen, Sparkles } from "lucide-react";
 import clsx from "clsx";
 
 /**
@@ -61,9 +61,9 @@ export const StatsCard = ({
 /**
  * Statistics section component
  */
-export const StatsSection = ({ totalWords, wordsThisWeek, latestWord }) => {
+export const StatsSection = ({ totalWords, latestWord }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full max-w-2xl mx-auto">
       <StatsCard
         label="Total Words"
         value={totalWords}
@@ -72,19 +72,11 @@ export const StatsSection = ({ totalWords, wordsThisWeek, latestWord }) => {
         delay={0}
       />
       <StatsCard
-        label="Added This Week"
-        value={wordsThisWeek}
-        trend={wordsThisWeek}
-        icon={TrendingUp}
-        gradient="bg-gradient-to-br from-emerald-500 to-teal-600"
-        delay={0.1}
-      />
-      <StatsCard
         label="Latest Word"
         value={latestWord?.word || "—"}
         icon={Sparkles}
         gradient="bg-gradient-to-br from-purple-500 to-pink-600"
-        delay={0.2}
+        delay={0.1}
       />
     </div>
   );

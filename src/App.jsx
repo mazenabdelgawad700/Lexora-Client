@@ -1,5 +1,11 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AnimatePresence, motion } from "framer-motion";
 import { ThemeProvider, useTheme } from "./hooks";
@@ -11,12 +17,41 @@ import WordDetailsPage from "./pages/WordDetailsPage";
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: "easeOut" },
+  },
   exit: { opacity: 0, y: -8, transition: { duration: 0.2, ease: "easeIn" } },
 };
 
+// Handle GitHub Pages SPA routing redirect from 404.html
+function handleGitHubPagesRedirect() {
+  const url = new URL(window.location);
+  const pathParam = url.searchParams.get("p");
+  const queryParam = url.searchParams.get("q");
+
+  if (pathParam) {
+    const path = pathParam.replace(/~and~/g, "&");
+    const query = queryParam ? queryParam.replace(/~and~/g, "&") : "";
+    const redirectUrl = path + (query ? "?" + query : "") + url.hash;
+    window.history.replaceState(null, null, redirectUrl);
+  }
+}
+
 function AnimatedRoutes({ onAddWord }) {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Redirect to dashboard if just accessing root with query params (from 404)
+  useEffect(() => {
+    if (
+      location.pathname === "/Lexora-Client/" &&
+      location.search.includes("p=")
+    ) {
+      handleGitHubPagesRedirect();
+    }
+  }, [location.pathname, location.search, navigate]);
 
   return (
     <AnimatePresence mode="wait">
@@ -65,7 +100,9 @@ function AppContent() {
       <div className="flex items-center justify-center h-screen bg-slate-50 dark:bg-slate-950">
         <div className="flex flex-col items-center gap-4">
           <div className="w-10 h-10 border-4 border-accent-200 dark:border-accent-800 border-t-accent-500 rounded-full animate-spin" />
-          <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Loading Lexora...</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+            Loading Lexora...
+          </p>
         </div>
       </div>
     );

@@ -39,6 +39,13 @@ export const AddWordModal = ({
         setFormData({ word: "", definition: "", example: "" });
       }
       setErrors({});
+    } else {
+      // Delay clearing form data to avoid modal flicker during exit animation
+      const timer = setTimeout(() => {
+        setFormData({ word: "", definition: "", example: "" });
+        setErrors({});
+      }, 150);
+      return () => clearTimeout(timer);
     }
   }, [isOpen, editingWord]);
 
