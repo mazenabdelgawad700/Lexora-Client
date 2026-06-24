@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, Zap, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
@@ -13,29 +13,23 @@ import { SEARCH_MODES } from "../constants/app";
 import toast from "react-hot-toast";
 import { SUCCESS_MESSAGES, ERROR_MESSAGES } from "../constants/app";
 
-/**
- * Search Page
- */
+
 const SearchPage = () => {
   const navigate = useNavigate();
   const [searchMode, setSearchMode] = useState(SEARCH_MODES.WORD);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [recentSearches, setRecentSearches] = useState([]);
+  const [recentSearches, setRecentSearches] = useState(() => {
+    const stored = localStorage.getItem("lexora_recent_searches");
+
+    return stored ? JSON.parse(stored) : [];
+  });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [editingWord, setEditingWord] = useState(null);
   const [hasSearched, setHasSearched] = useState(false);
   const store = useVocabularyStore();
-
-  // Load recent searches from localStorage
-  useEffect(() => {
-    const stored = localStorage.getItem("lexora_recent_searches");
-    if (stored) {
-      setRecentSearches(JSON.parse(stored));
-    }
-  }, []);
 
   const handleSearch = async (searchQuery) => {
     if (!searchQuery.trim()) {
@@ -208,8 +202,8 @@ const SearchPage = () => {
           />
         </motion.div>
       )}
-      hasSearched &&
-      {!isLoading && query && results.length === 0 && (
+
+      {hasSearched && !isLoading && query && results.length === 0 && (
         <EmptyState
           message="No words found matching your search"
           icon={Search}
