@@ -24,7 +24,10 @@ import { Button } from "../components/common";
  */
 const DashboardPage = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
+  const store = useVocabularyStore();
+  const [isLoading, setIsLoading] = useState(
+    () => store.vocabularies.length === 0,
+  );
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState(null);
@@ -33,14 +36,22 @@ const DashboardPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMorePages, setHasMorePages] = useState(false);
 
-  const store = useVocabularyStore();
-
   // Load initial data
   useEffect(() => {
+    let isActive = true;
+
     const fetchVocabularies = async () => {
+      if (store.vocabularies.length > 0 && store.totalCount > 0) {
+        setHasMorePages(store.vocabularies.length < store.totalCount);
+        setIsLoading(false);
+        return;
+      }
+
       setIsLoading(true);
       try {
         const response = await vocabularyApi.list(1, DEFAULT_PAGE_SIZE);
+        if (!isActive) return;
+
         if (response.succeeded) {
           const items = Array.isArray(response.data.vocabularyEntries)
             ? response.data.vocabularyEntries
@@ -53,21 +64,28 @@ const DashboardPage = () => {
           } else if (items.length > 0) {
             store.setTotalCount(items.length);
             setHasMorePages(false);
+          } else {
+            setHasMorePages(false);
           }
           setCurrentPage(1);
         } else {
           toast.error(response.message || "Failed to load vocabularies");
         }
       } catch (error) {
+        if (!isActive) return;
         toast.error(error.message || ERROR_MESSAGES.NETWORK_ERROR);
       } finally {
-        setIsLoading(false);
+        if (isActive) {
+          setIsLoading(false);
+        }
       }
     };
 
-    if (store.vocabularies.length === 0) {
-      fetchVocabularies();
-    }
+    fetchVocabularies();
+
+    return () => {
+      isActive = false;
+    };
   }, [store]);
 
   const stats = calculateStats(store.vocabularies);
@@ -160,7 +178,7 @@ const DashboardPage = () => {
             </h1>
           </div>
           <p className="text-lg text-slate-500 dark:text-slate-400 max-w-md">
-            Master English vocabulary at your own pace — track, search, and grow
+            Master English vocabulary at your own pace - track, search, and grow
             your word collection.
           </p>
         </motion.div>
