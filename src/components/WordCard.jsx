@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Heart, Edit2, Trash2, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { Button } from "./common";
-import { truncate, formatTimeAgo } from "../utils/helpers";
+import { truncate } from "../utils/helpers";
 import clsx from "clsx";
 
 const cardVariants = {
@@ -66,7 +65,9 @@ export const WordCard = ({
 
       {/* Definition preview */}
       <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-2">
-        <span className="font-semibold text-slate-700 dark:text-slate-300">Definition:</span>{" "}
+        <span className="font-semibold text-slate-700 dark:text-slate-300">
+          Definition:
+        </span>{" "}
         {truncate(word.definition, 100)}
       </p>
 
@@ -101,7 +102,10 @@ export const WordCard = ({
           >
             <Trash2 size={15} />
           </button>
-          <ArrowRight size={15} className="text-slate-300 dark:text-slate-600 ml-1" />
+          <ArrowRight
+            size={15}
+            className="text-slate-300 dark:text-slate-600 ml-1"
+          />
         </div>
       </div>
     </motion.div>
@@ -154,14 +158,13 @@ export const EmptyState = ({ message = "No data found", icon: Icon }) => {
       {Icon && (
         <div className="flex justify-center">
           <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800">
-            <Icon
-              size={40}
-              className="text-slate-400 dark:text-slate-500"
-            />
+            <Icon size={40} className="text-slate-400 dark:text-slate-500" />
           </div>
         </div>
       )}
-      <p className="text-slate-500 dark:text-slate-400 font-medium">{message}</p>
+      <p className="text-slate-500 dark:text-slate-400 font-medium">
+        {message}
+      </p>
     </motion.div>
   );
 };
