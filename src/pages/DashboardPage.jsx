@@ -9,7 +9,7 @@ import { ConfirmationDialog } from "../components/Modal";
 import { AddWordModal } from "../components/AddWordModal";
 import vocabularyApi from "../services/api";
 import { useVocabularyStore } from "../context/vocabularyStore";
-import { calculateStats } from "../utils/helpers";
+// import { calculateStats } from "../utils/helpers";
 import toast from "react-hot-toast";
 import {
   SUCCESS_MESSAGES,
@@ -88,7 +88,7 @@ const DashboardPage = () => {
     };
   }, [store]);
 
-  const stats = calculateStats(store.vocabularies);
+  // const stats = calculateStats(store.vocabularies);
   const totalWords = store.totalCount || store.vocabularies.length;
 
   // Filter words based on search
@@ -167,20 +167,32 @@ const DashboardPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="space-y-3"
+          className="grid grid-cols-1 md:grid-cols-2"
         >
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl gradient-bg shadow-glow">
-              <Sparkles size={24} className="text-white" />
+          <div className="flex flex-col justify-between mb-5 md:mb-0">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl gradient-bg shadow-glow">
+                <Sparkles size={24} className="text-white" />
+              </div>
+              <h1 className="text-4xl font-extrabold tracking-tight">
+                <span className="gradient-text">Lexora</span>
+              </h1>
             </div>
-            <h1 className="text-4xl font-extrabold tracking-tight">
-              <span className="gradient-text">Lexora</span>
-            </h1>
+
+            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-md">
+              Master English vocabulary at your own pace - track, search, and
+              grow your word collection.
+            </p>
           </div>
-          <p className="text-lg text-slate-500 dark:text-slate-400 max-w-md">
-            Master English vocabulary at your own pace - track, search, and grow
-            your word collection.
-          </p>
+
+          {/* Statistics */}
+          {isLoading ? (
+            <div className="">
+              <StatsSkeleton />
+            </div>
+          ) : (
+            <StatsSection totalWords={totalWords} />
+          )}
         </motion.div>
 
         {/* Search bar */}
@@ -196,17 +208,6 @@ const DashboardPage = () => {
           />
         </motion.div>
       </div>
-
-      {/* Statistics */}
-      {isLoading ? (
-        <div className="mb-12">
-          <StatsSkeleton />
-        </div>
-      ) : (
-        <div className="mb-12">
-          <StatsSection totalWords={totalWords} latestWord={stats.latest} />
-        </div>
-      )}
 
       {/* Recent words section */}
       <div className="space-y-4">
