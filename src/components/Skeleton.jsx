@@ -1,4 +1,3 @@
-import React from "react";
 import clsx from "clsx";
 
 /**
@@ -55,13 +54,7 @@ export const ListSkeleton = ({ count = 3 }) => {
 export const StatsSkeleton = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="card p-6 space-y-3">
-          <Skeleton className="h-4 w-24" />
-          <Skeleton className="h-8 w-16" />
-          <Skeleton className="h-10 w-10 rounded-xl" />
-        </div>
-      ))}
+      <Skeleton className="h-10 w-10 rounded-xl" />
     </div>
   );
 };
