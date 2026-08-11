@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Card } from "./common";
-import { BookOpen, Sparkles } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import clsx from "clsx";
 
 /**
@@ -40,43 +40,20 @@ export const StatsCard = ({
             </div>
           )}
         </div>
-        {/* {trend !== undefined && trend !== null && (
-          <div className="flex items-center gap-1.5">
-            <TrendingUp size={14} className={trend > 0 ? "text-emerald-500" : "text-slate-400"} />
-            <p
-              className={clsx(
-                "text-sm font-semibold",
-                trend > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-slate-500",
-              )}
-            >
-              {trend > 0 ? `+${trend}` : trend} this week
-            </p>
-          </div>
-        )} */}
       </Card>
     </motion.div>
   );
 };
 
-/**
- * Statistics section component
- */
-export const StatsSection = ({ totalWords, latestWord }) => {
+export const StatsSection = ({ totalWords }) => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full max-w-2xl mx-auto">
+    <div className="">
       <StatsCard
         label="Total Words"
         value={totalWords}
         icon={BookOpen}
         gradient="bg-gradient-to-br from-accent-500 to-accent-700"
         delay={0}
-      />
-      <StatsCard
-        label="Latest Word"
-        value={latestWord?.word || "—"}
-        icon={Sparkles}
-        gradient="bg-gradient-to-br from-purple-500 to-pink-600"
-        delay={0.1}
       />
     </div>
   );
